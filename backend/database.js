@@ -5,25 +5,42 @@ require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 let pool;
 
 function resolveConfig() {
-  // Soporte para Railway MySQL add-on (MYSQL_URL o variables individuales)
-  if (process.env.MYSQL_URL) {
-    const url = new URL(process.env.MYSQL_URL);
-    return {
+  // Soporte para Railway MySQL add-on (MYSQL_URL, DATABASE_URL, o variables individuales)
+  const urlStr = process.env.MYSQL_URL || process.env.DATABASE_URL;
+  if (urlStr) {
+    const url = new URL(urlStr);
+    const cfg = {
       host: url.hostname,
       port: parseInt(url.port) || 3306,
       user: decodeURIComponent(url.username),
       password: decodeURIComponent(url.password),
       database: url.pathname.replace(/^\//, ''),
     };
+    console.log(`  → DB config from URL: ${cfg.user}@${cfg.host}:${cfg.port}/${cfg.database}`);
+    return cfg;
   }
 
-  return {
-    host: process.env.MYSQLHOST || process.env.DB_HOST || 'localhost',
-    port: parseInt(process.env.MYSQLPORT || process.env.DB_PORT) || 3306,
-    user: process.env.MYSQLUSER || process.env.DB_USER || 'root',
-    password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD || '',
-    database: process.env.MYSQLDATABASE || process.env.DB_NAME || 'solidshow',
-  };
+  // Soporte para Railway MySQL add-on (variables individuales) y local dev
+  const host = process.env.MYSQLHOST || process.env.DB_HOST;
+  const port = process.env.MYSQLPORT || process.env.DB_PORT;
+  const user = process.env.MYSQLUSER || process.env.DB_USER;
+  const password = process.env.MYSQLPASSWORD || process.env.DB_PASSWORD;
+  const database = process.env.MYSQLDATABASE || process.env.DB_NAME;
+
+  if (host) {
+    const cfg = {
+      host,
+      port: parseInt(port) || 3306,
+      user: user || 'root',
+      password: password || '',
+      database: database || 'railway',
+    };
+    console.log(`  → DB config from env vars: ${cfg.user}@${cfg.host}:${cfg.port}/${cfg.database}`);
+    return cfg;
+  }
+
+  console.log('  ⚠ No DB env vars found, check Railway MySQL add-on is linked to this service');
+  return { host: 'localhost', port: 3306, user: 'root', password: '', database: 'solidshow' };
 }
 
 function getDatabase() {
@@ -44,4 +61,15 @@ function getDatabase() {
   return pool;
 }
 
-module.exports = { getDatabase };
+function getConfig() {
+  return resolveConfig();
+}
+
+function resetPool() {
+  if (pool) {
+    pool.end().catch(() => {});
+    pool = null;
+  }
+}
+
+module.exports = { getDatabase, getConfig, resetPool };

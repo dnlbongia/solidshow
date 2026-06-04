@@ -18,8 +18,26 @@ app.use(express.static(path.join(__dirname, '..')));
 
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get('/api/health', async (req, res) => {
+  const { getConfig, getDatabase } = require('./database');
+  const cfg = getConfig();
+  let dbOk = false;
+  try {
+    const db = getDatabase();
+    await db.query('SELECT 1');
+    dbOk = true;
+  } catch {}
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    db: {
+      host: cfg.host,
+      port: cfg.port,
+      database: cfg.database,
+      user: cfg.user,
+      connected: dbOk,
+    }
+  });
 });
 
 app.use('/api/auth', require('./routes/auth'));
@@ -36,7 +54,7 @@ app.get('/admin*', (req, res) => {
 
 async function ensureDatabase() {
   try {
-    const { getDatabase } = require('./database');
+    const { getDatabase, resetPool } = require('./database');
     const db = getDatabase();
     const [tables] = await db.execute(
       "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = (SELECT DATABASE())"
@@ -63,6 +81,8 @@ async function ensureDatabase() {
   } catch (err) {
     if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') {
       console.warn('  ⚠ Database not available yet, app will start without DB');
+      const { resetPool } = require('./database');
+      resetPool();
     } else {
       console.error('  ⚠ DB init error:', err.message);
     }

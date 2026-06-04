@@ -2,3 +2,6 @@ node_modules/
 .env
 assets/uploads/*
 !assets/uploads/.gitkeep
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
