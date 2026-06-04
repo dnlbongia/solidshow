@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolidShow - Eventos Corporativos & Sociales</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header__container">
+      <a href="#" class="header__logo">Solid<span>Show</span></a>
+      <nav class="header__nav" id="nav">
+        <ul class="header__menu">
+          <li><a href="#inicio" class="header__link">Inicio</a></li>
+          <li><a href="#eventos" class="header__link">Eventos</a></li>
+          <li><a href="#resenas" class="header__link">Reseñas</a></li>
+          <li><a href="#reservas" class="header__link">Reservas</a></li>
+          <li><a href="#contacto" class="header__link">Contacto</a></li>
+        </ul>
+      </nav>
+      <button class="header__toggle" id="menuToggle" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero">
+      <div class="hero__bg-placeholder">
+        <div class="media-placeholder media-placeholder--hero">
+          <i class="fas fa-image"></i>
+          <span>hero-bg.jpg</span>
+        </div>
+      </div>
+      <div class="hero__overlay"></div>
+      <button class="hero__arrow hero__arrow--prev" aria-label="Anterior" hidden><i class="fas fa-chevron-left"></i></button>
+      <button class="hero__arrow hero__arrow--next" aria-label="Siguiente" hidden><i class="fas fa-chevron-right"></i></button>
+      <div class="hero__dots" hidden></div>
+      <div class="container hero__content">
+        <h1 class="hero__title">Hacemos de tu evento una experiencia inolvidable</h1>
+        <p class="hero__subtitle">Organizamos eventos corporativos y sociales con creatividad, profesionalismo y pasión.</p>
+        <div class="hero__actions">
+          <a href="#reservas" class="btn btn--primary">Reserva ahora</a>
+          <a href="#eventos" class="btn btn--outline">Ver eventos</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="eventos" class="section eventos">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__tag">Nuestros servicios</span>
+          <h2 class="section__title">Tipos de eventos</h2>
+          <p class="section__desc">Ofrecemos soluciones completas para toda ocasión.</p>
+        </div>
+        <div class="eventos__grid"></div>
+      </div>
+    </section>
+
+    <section id="proximos" class="section proximos">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__tag">Próximos eventos</span>
+          <h2 class="section__title">No te los pierdas</h2>
+          <p class="section__desc">Compra tus entradas y asegura tu lugar en nuestros próximos eventos.</p>
+        </div>
+        <div class="proximos__grid" id="proximosGrid">
+          <div class="proximos__empty media-placeholder" style="grid-column:1/-1;padding:60px">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Cargando eventos...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resenas" class="section resenas">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__tag">Testimonios</span>
+          <h2 class="section__title">Lo que dicen nuestros clientes</h2>
+          <p class="section__desc">La satisfacción de quienes confiaron en nosotros habla por sí sola.</p>
+        </div>
+        <div class="resenas__grid" id="resenasGrid">
+          <div class="proximos__empty media-placeholder" style="grid-column:1/-1;padding:60px">
+            <i class="fas fa-star"></i>
+            <span>Cargando testimonios...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reservas" class="section reservas">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__tag">Reserva</span>
+          <h2 class="section__title">Solicita tu reserva</h2>
+          <p class="section__desc">Completa el formulario y nos pondremos en contacto contigo en menos de 24 horas.</p>
+        </div>
+        <form class="reservas__form" id="reservasForm">
+          <div class="form__row">
+            <div class="form__group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" required placeholder="Tu nombre" />
+            </div>
+            <div class="form__group">
+              <label for="email">Correo electrónico</label>
+              <input type="email" id="email" name="email" required placeholder="correo@ejemplo.com" />
+            </div>
+          </div>
+          <div class="form__row">
+            <div class="form__group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" required placeholder="+52 555 123 4567" />
+            </div>
+            <div class="form__group">
+              <label for="tipo">Tipo de evento</label>
+              <select id="tipo" name="tipo" required>
+                <option value="">Selecciona una opción</option>
+                <option value="corporativo">Corporativo</option>
+                <option value="social">Social</option>
+                <option value="concierto">Fiesta / Concierto</option>
+                <option value="taller">Taller / Seminario</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+          </div>
+          <div class="form__row">
+            <div class="form__group">
+              <label for="fecha">Fecha estimada</label>
+              <input type="date" id="fecha" name="fecha" required />
+            </div>
+            <div class="form__group">
+              <label for="invitados">Número de invitados</label>
+              <input type="number" id="invitados" name="invitados" required min="1" placeholder="Ej: 100" />
+            </div>
+          </div>
+          <div class="form__group form__group--full">
+            <label for="mensaje">Mensaje adicional</label>
+            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos más sobre tu evento..."></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block">Enviar solicitud</button>
+        </form>
+        <div class="reservas__success" id="reservasSuccess">
+          <i class="fas fa-check-circle"></i>
+          <h3>¡Solicitud enviada con éxito!</h3>
+          <p>Te contactaremos pronto para confirmar los detalles.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria" class="section galeria">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__tag">Galería</span>
+          <h2 class="section__title">Momentos que nos definen</h2>
+          <p class="section__desc">Explora algunas imágenes y videos de nuestros eventos pasados.</p>
+        </div>
+        <div class="galeria__grid" id="galeriaGrid"></div>
+      </div>
+    </section>
+
+    <section id="contacto" class="section contacto">
+      <div class="container">
+        <div class="section__header">
+          <span class="section__tag">Contacto</span>
+          <h2 class="section__title">Estamos para ayudarte</h2>
+          <p class="section__desc">No dudes en escribirnos ante cualquier duda.</p>
+        </div>
+        <div class="contacto__grid">
+          <div class="contacto__info">
+            <div class="contacto__item">
+              <i class="fas fa-map-marker-alt"></i>
+              <div>
+                <h4>Dirección</h4>
+                <p>Av. Reforma 350, Col. Juárez, CDMX</p>
+              </div>
+            </div>
+            <div class="contacto__item">
+              <i class="fas fa-phone-alt"></i>
+              <div>
+                <h4>Teléfono</h4>
+                <p>+52 55 1234 5678</p>
+              </div>
+            </div>
+            <div class="contacto__item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <h4>Email</h4>
+                <p>hola@solidshow.mx</p>
+              </div>
+            </div>
+            <div class="contacto__item">
+              <i class="fas fa-clock"></i>
+              <div>
+                <h4>Horario</h4>
+                <p>Lun – Vie: 9:00 – 18:00</p>
+              </div>
+            </div>
+          </div>
+          <div class="contacto__map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.5!2d-99.1667!3d19.4333!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDI2JzAwLjAiTiA5OcKwMTAnMDAuMCJX!5e0!3m2!1ses!2smx!4v1"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Ubicación de SolidShow">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__container">
+      <div class="footer__brand">
+        <a href="#" class="footer__logo">Solid<span>Show</span></a>
+        <p>Transformamos ideas en experiencias memorables.</p>
+        <div class="footer__social">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <h4>Enlaces rápidos</h4>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#eventos">Eventos</a></li>
+          <li><a href="#resenas">Reseñas</a></li>
+          <li><a href="#reservas">Reservas</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer__links">
+        <h4>Servicios</h4>
+        <ul>
+          <li><a href="#eventos">Corporativos</a></li>
+          <li><a href="#eventos">Sociales</a></li>
+          <li><a href="#eventos">Conciertos</a></li>
+          <li><a href="#eventos">Talleres</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>Suscríbete</h4>
+        <p>Recibe novedades y ofertas exclusivas.</p>
+        <form class="footer__form" id="newsletterForm">
+          <input type="email" placeholder="Tu correo" required />
+          <button type="submit" aria-label="Suscribir"><i class="fas fa-arrow-right"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 SolidShow. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
