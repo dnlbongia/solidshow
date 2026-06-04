@@ -74,10 +74,12 @@ async function ensureDatabase() {
           throw e;
         }
       }
-      const seed = require('./seed');
-      await seed();
-      console.log('  → Database ready');
     }
+
+    // Always run seed (idempotent — skips if data already exists)
+    const seed = require('./seed');
+    await seed();
+    console.log('  → Database ready');
   } catch (err) {
     if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') {
       console.warn('  ⚠ Database not available yet, app will start without DB');
